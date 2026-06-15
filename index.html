@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manish Enterprises – Turning Realty Dreams into Reality</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --gold:#b8933f;--gold-light:#d4ae6a;--gold-pale:#f0e4c4;--gold-glow:rgba(184,147,63,0.35);
+      --bg:#f5f2eb;--bg2:#ffffff;--bg3:#ede8de;
+      --dark:#16120d;--dark2:#231e16;--dark3:#2e2618;
+      --text:#231e16;--text-muted:#7a7060;--text-light:#a09080;
+      --border:rgba(184,147,63,0.2);--border2:rgba(184,147,63,0.1);
+      --shadow:0 4px 40px rgba(30,20,10,0.09);
+      --shadow-lg:0 16px 70px rgba(30,20,10,0.15);
+      --shadow-xl:0 32px 100px rgba(30,20,10,0.22);
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+
+    /* ─── CUSTOM SCROLLBAR ─── */
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+    /* ─── NAV ─── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:300;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 5vw;
+      background:transparent;
+      transition:background 0.4s,backdrop-filter 0.4s,box-shadow 0.4s,padding 0.4s;
+    }
+    nav.scrolled{
+      background:rgba(245,242,235,0.94);
+      backdrop-filter:blur(16px);
+      box-shadow:0 1px 0 var(--border),var(--shadow);
+      padding:0.75rem 5vw;
+    }
+    .logo{
+      font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;
+      letter-spacing:0.04em;color:var(--dark);text-decoration:none;
+      display:flex;align-items:center;gap:0.5rem;
+    }
+    .logo-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);margin-bottom:2px;}
+    .logo span{color:var(--gold);}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{
+      text-decoration:none;color:var(--text-muted);
+      font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;
+      position:relative;transition:color 0.2s;
+    }
+    .nav-links a::after{
+      content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;
+      background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+    }
+    .nav-links a:hover{color:var(--gold);}
+    .nav-links a:hover::after{transform:scaleX(1);}
+    .nav-right{display:flex;gap:0.7rem;align-items:center;}
+    .nav-btn{
+      background:transparent;border:1px solid var(--border);
+      color:var(--text-muted);padding:0.48rem 1.2rem;
+      font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
+      cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;
+      transition:all 0.2s;border-radius:2px;text-decoration:none;
+    }
+    .nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+    .nav-btn-gold{
+      background:var(--gold);border:1px solid var(--gold);color:#fff;
+      padding:0.48rem 1.4rem;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
+      cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;
+      border-radius:2px;text-decoration:none;transition:all 0.22s;
+    }
+    .nav-btn-gold:hover{background:var(--gold-light);border-color:var(--gold-light);transform:translateY(-1px);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+    .hamburger span{width:22px;height:1.5px;background:var(--dark);transition:all 0.3s;}
+
+    /* ─── HERO ─── */
+    .hero{
+      min-height:100vh;position:relative;overflow:hidden;
+      display:flex;align-items:center;
+      padding:0 5vw;
+    }
+    /* Layered gradient mesh background */
+    .hero-mesh{
+      position:absolute;inset:0;z-index:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 65% 40%, rgba(184,147,63,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 10% 90%, rgba(184,147,63,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 85% 85%, rgba(184,147,63,0.06) 0%, transparent 50%),
+        linear-gradient(155deg, #f5f2eb 0%, #ede6d5 40%, #e8dfc8 70%, #f0ead8 100%);
+    }
+    /* Subtle grid */
+    .hero-grid{
+      position:absolute;inset:0;z-index:0;pointer-events:none;
+      background-image:
+        linear-gradient(rgba(184,147,63,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,147,63,0.055) 1px, transparent 1px);
+      background-size:72px 72px;
+      mask-image:radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    }
+    /* Canvas for particles */
+    #heroCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;}
+
+    .hero-inner{
+      position:relative;z-index:2;
+      display:grid;grid-template-columns:1.1fr 0.9fr;
+      gap:5rem;align-items:center;max-width:1300px;margin:0 auto;width:100%;
+      padding-top:90px;
+    }
+
+    .hero-eyebrow{
+      display:inline-flex;align-items:center;gap:0.75rem;
+      background:rgba(184,147,63,0.08);border:1px solid rgba(184,147,63,0.22);
+      padding:0.42rem 1.1rem;margin-bottom:2.2rem;border-radius:100px;
+      width:fit-content;opacity:0;transform:translateY(20px);
+    }
+    .hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse-dot 2s ease-in-out infinite;}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.4);}}
+    .hero-eyebrow span{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+
+    .hero-h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.4rem,6.5vw,7rem);
+      font-weight:200;line-height:0.98;color:var(--dark);
+      opacity:0;transform:translateY(30px);
+    }
+    .hero-h1 em{font-style:italic;color:var(--gold);font-weight:300;}
+    .hero-h1 .word-line{display:block;overflow:hidden;}
+
+    .hero-sub{
+      margin-top:2rem;font-size:0.97rem;color:var(--text-muted);
+      max-width:420px;line-height:1.85;
+      opacity:0;transform:translateY(20px);
+    }
+
+    /* Search */
+    .hero-search-wrap{
+      margin-top:2.8rem;opacity:0;transform:translateY(20px);
+    }
+    .hero-search{
+      background:#fff;border:1px solid var(--border);border-radius:6px;
+      padding:0.55rem;display:flex;gap:0.5rem;
+      box-shadow:0 8px 40px rgba(30,20,10,0.1);max-width:500px;
+    }
+    .hero-search input{
+      flex:1;border:none;outline:none;padding:0.65rem 1rem;
+      font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--text);background:transparent;
+    }
+    .hero-search button{
+      background:var(--gold);color:#fff;border:none;padding:0.65rem 1.6rem;
+      font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;
+      font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;border-radius:4px;
+      transition:background 0.2s,transform 0.2s;
+    }
+    .hero-search button:hover{background:var(--gold-light);transform:translateX(2px);}
+
+    .hero-actions{
+      margin-top:1.8rem;display:flex;gap:1rem;flex-wrap:wrap;
+      opacity:0;transform:translateY(20px);
+    }
+    .btn-primary{
+      background:var(--gold);color:#fff;padding:0.88rem 2.4rem;font-size:0.8rem;
+      letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500;
+      border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:0.6rem;
+      border-radius:3px;transition:all 0.22s;
+    }
+    .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px var(--gold-glow);}
+    .btn-primary svg{width:14px;height:14px;transition:transform 0.2s;}
+    .btn-primary:hover svg{transform:translateX(3px);}
+    .btn-ghost{
+      background:transparent;color:var(--dark);padding:0.88rem 2.4rem;font-size:0.8rem;
+      letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:400;
+      border:1.5px solid rgba(46,40,32,0.2);cursor:pointer;text-decoration:none;display:inline-block;
+      border-radius:3px;transition:all 0.22s;
+    }
+    .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* Hero right - stat stack */
+    .hero-stats-stack{
+      display:flex;flex-direction:column;gap:1rem;
+      opacity:0;transform:translateX(40px);
+    }
+    .hstat{
+      background:rgba(255,255,255,0.85);
+      border:1px solid rgba(184,147,63,0.18);
+      border-radius:8px;padding:1.4rem 1.8rem;
+      display:flex;align-items:center;gap:1.4rem;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(8px);
+      transition:all 0.3s;cursor:default;
+    }
+    .hstat:hover{transform:translateX(5px) translateY(-2px);box-shadow:var(--shadow-lg);border-color:rgba(184,147,63,0.35);}
+    .hstat-icon{
+      width:50px;height:50px;flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold-pale),rgba(240,228,196,0.5));
+      border-radius:6px;display:flex;align-items:center;justify-content:center;
+      color:var(--gold);
+    }
+    .hstat-icon svg{width:22px;height:22px;}
+    .hstat-num{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:300;line-height:1;color:var(--dark);}
+    .hstat-label{font-size:0.72rem;color:var(--text-muted);letter-spacing:0.06em;margin-top:0.15rem;}
+
+    /* Hero decorative line */
+    .hero-decor-line{
+      position:absolute;right:5vw;top:50%;transform:translateY(-50%);
+      width:1px;height:200px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+      opacity:0.3;display:none;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap{
+      border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);
+      padding:0.85rem 0;overflow:hidden;background:var(--bg2);
+    }
+    .marquee-track{display:flex;gap:3rem;white-space:nowrap;animation:marquee 32s linear infinite;}
+    .marquee-track span{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-light);flex-shrink:0;}
+    .marquee-track .dot{color:var(--gold);}
+
+    /* ─── SHARED ─── */
+    .section-eyebrow{
+      display:flex;align-items:center;gap:0.9rem;margin-bottom:0.8rem;
+    }
+    .section-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);}
+    .section-eyebrow span{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+
+    .reveal{opacity:0;transform:translateY(32px);}
+    .reveal-left{opacity:0;transform:translateX(-32px);}
+    .reveal-right{opacity:0;transform:translateX(32px);}
+    .reveal-scale{opacity:0;transform:scale(0.94);}
+
+    /* ─── LISTINGS ─── */
+    .listings-section{padding:6rem 5vw;background:var(--bg);}
+    .listings-top{
+      display:flex;justify-content:space-between;align-items:flex-end;
+      margin-bottom:3rem;flex-wrap:wrap;gap:1.2rem;
+      max-width:1300px;margin-left:auto;margin-right:auto;
+    }
+    .listings-top h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;color:var(--dark);line-height:1.1;
+    }
+    .filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;}
+    .filter-tab{
+      padding:0.44rem 1.1rem;border:1px solid var(--border);
+      background:#fff;color:var(--text-muted);font-size:0.73rem;
+      letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
+      border-radius:100px;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.22s;
+    }
+    .filter-tab.active,.filter-tab:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+
+    .listings-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1.6rem;max-width:1300px;margin:0 auto;
+    }
+
+    /* Property card — premium redesign */
+    .property-card{
+      background:#fff;border:1px solid var(--border2);border-radius:12px;
+      overflow:hidden;box-shadow:var(--shadow);
+      transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),box-shadow 0.35s;
+      cursor:pointer;position:relative;
+    }
+    .property-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-xl);}
+
+    .card-img{
+      height:210px;position:relative;overflow:hidden;
+    }
+    .card-img-bg{
+      position:absolute;inset:0;
+      transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .property-card:hover .card-img-bg{transform:scale(1.06);}
+    /* Sheen overlay */
+    .card-img::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(22,18,13,0.35) 100%);
+      z-index:1;
+    }
+    .card-img-icon{
+      position:absolute;inset:0;z-index:0;
+      display:flex;align-items:center;justify-content:center;
+      opacity:0.22;
+    }
+    .card-img-icon svg{width:80px;height:80px;}
+
+    .card-badge{
+      position:absolute;top:14px;left:14px;z-index:2;
+      color:#fff;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;
+      padding:0.3rem 0.75rem;border-radius:100px;font-weight:600;
+      backdrop-filter:blur(8px);
+    }
+    .card-badge-new{
+      position:absolute;top:14px;right:14px;z-index:2;
+      color:#fff;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;
+      padding:0.3rem 0.75rem;border-radius:100px;font-weight:600;
+    }
+    .card-posted{
+      position:absolute;top:14px;right:14px;z-index:2;
+      background:rgba(22,18,13,0.6);backdrop-filter:blur(8px);color:rgba(255,255,255,0.85);
+      font-size:0.6rem;padding:0.28rem 0.7rem;border-radius:100px;
+    }
+
+    .card-body{padding:1.5rem 1.5rem 1rem;}
+    .card-price{
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.7rem;font-weight:400;color:var(--dark);line-height:1;
+    }
+    .card-price sub{font-size:0.72rem;font-family:'DM Sans',sans-serif;color:var(--text-muted);vertical-align:baseline;font-weight:300;}
+    .card-title{font-size:0.9rem;color:var(--dark);font-weight:500;margin:0.55rem 0 0.2rem;line-height:1.4;}
+    .card-loc{
+      font-size:0.76rem;color:var(--text-muted);
+      display:flex;align-items:center;gap:0.3rem;
+    }
+    .card-loc svg{width:11px;height:11px;color:var(--gold);flex-shrink:0;}
+
+    .card-specs{
+      display:flex;gap:0;margin-top:1.1rem;
+      padding-top:1.1rem;border-top:1px solid var(--border2);
+    }
+    .card-spec{
+      flex:1;display:flex;flex-direction:column;align-items:center;gap:0.25rem;
+      font-size:0.7rem;color:var(--text-muted);
+      padding:0 0.5rem;border-right:1px solid var(--border2);
+    }
+    .card-spec:last-child{border-right:none;}
+    .card-spec svg{width:14px;height:14px;color:var(--gold);}
+    .card-spec-val{font-size:0.75rem;color:var(--dark);font-weight:500;}
+
+    .card-footer{
+      padding:1rem 1.5rem;border-top:1px solid var(--border2);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .card-owner{display:flex;align-items:center;gap:0.6rem;}
+    .card-avatar{
+      width:30px;height:30px;border-radius:50%;
+      background:linear-gradient(135deg,var(--gold-pale),var(--gold-glow));
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.68rem;font-weight:700;color:var(--gold);
+    }
+    .card-owner-name{font-size:0.74rem;color:var(--text-muted);}
+    .card-contact-btn{
+      background:var(--gold-pale);border:1px solid rgba(184,147,63,0.3);
+      color:var(--gold);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
+      padding:0.38rem 1rem;cursor:pointer;font-family:'DM Sans',sans-serif;
+      border-radius:100px;font-weight:600;transition:all 0.22s;
+    }
+    .card-contact-btn:hover{background:var(--gold);color:#fff;border-color:var(--gold);}
+
+    /* ─── ABOUT ─── */
+    .about-section{padding:7rem 5vw;background:var(--dark);position:relative;overflow:hidden;}
+    .about-bg-pattern{
+      position:absolute;inset:0;z-index:0;pointer-events:none;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(184,147,63,0.07) 0%, transparent 60%),
+        linear-gradient(rgba(184,147,63,0.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(184,147,63,0.04) 1px,transparent 1px);
+      background-size:auto,80px 80px,80px 80px;
+    }
+    .about-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:6rem;
+      align-items:center;max-width:1300px;margin:0 auto;position:relative;z-index:1;
+    }
+    .about-left .section-eyebrow::before{background:var(--gold);}
+    .about-left h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,4vw,3.6rem);font-weight:200;line-height:1.15;color:#fff;
+      margin-bottom:1.8rem;
+    }
+    .about-left h2 em{font-style:italic;color:var(--gold-light);}
+    .about-left p{font-size:0.93rem;color:rgba(255,255,255,0.55);line-height:1.9;margin-bottom:1.2rem;}
+    .about-left a{margin-top:1.5rem;display:inline-block;}
+    .btn-ghost-light{
+      background:transparent;color:rgba(255,255,255,0.8);
+      padding:0.85rem 2.2rem;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;
+      font-family:'DM Sans',sans-serif;font-weight:400;
+      border:1px solid rgba(255,255,255,0.2);cursor:pointer;text-decoration:none;
+      border-radius:3px;transition:all 0.22s;display:inline-block;
+    }
+    .btn-ghost-light:hover{border-color:var(--gold-light);color:var(--gold-light);}
+
+    /* Value cards - right side */
+    .value-cards{display:flex;flex-direction:column;gap:1px;}
+    .value-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(184,147,63,0.12);
+      padding:1.6rem 2rem;display:flex;gap:1.4rem;align-items:flex-start;
+      transition:background 0.3s,border-color 0.3s;
+    }
+    .value-card:first-child{border-radius:8px 8px 0 0;}
+    .value-card:last-child{border-radius:0 0 8px 8px;}
+    .value-card:hover{background:rgba(184,147,63,0.07);border-color:rgba(184,147,63,0.25);}
+    .value-icon{
+      width:38px;height:38px;flex-shrink:0;
+      background:rgba(184,147,63,0.15);border:1px solid rgba(184,147,63,0.25);
+      border-radius:6px;display:flex;align-items:center;justify-content:center;
+      color:var(--gold-light);margin-top:2px;
+    }
+    .value-icon svg{width:17px;height:17px;}
+    .value-card h4{font-size:0.84rem;color:#fff;margin-bottom:0.3rem;font-weight:500;letter-spacing:0.02em;}
+    .value-card p{font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.75;}
+
+    /* ─── PROJECTS ─── */
+    .projects-section{padding:7rem 5vw;background:var(--bg3);overflow:hidden;}
+    .projects-header{
+      display:flex;justify-content:space-between;align-items:flex-end;
+      margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem;
+      max-width:1300px;margin-left:auto;margin-right:auto;
+    }
+    .projects-header h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;color:var(--dark);line-height:1.1;
+    }
+    .projects-header p{max-width:300px;font-size:0.87rem;color:var(--text-muted);line-height:1.8;}
+
+    .projects-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1.2rem;max-width:1300px;margin:0 auto;
+    }
+    .project-card{
+      background:var(--bg2);padding:2rem 1.8rem 2rem 2.2rem;
+      border:1px solid var(--border);border-radius:8px;
+      position:relative;overflow:hidden;
+      transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .project-card::before{
+      content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+      background:linear-gradient(to bottom,var(--gold-light),var(--gold));
+      transform:scaleY(0);transform-origin:top;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .project-card:hover{border-color:rgba(184,147,63,0.35);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+    .project-card:hover::before{transform:scaleY(1);}
+    .project-tag{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem;display:block;}
+    .project-name{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;color:var(--dark);margin-bottom:0.45rem;}
+    .project-loc{font-size:0.76rem;color:var(--text-muted);display:flex;align-items:center;gap:0.3rem;}
+    .project-loc svg{width:11px;height:11px;color:var(--gold);}
+
+    /* ─── WHY US ─── */
+    .why-section{padding:7rem 5vw;background:var(--bg2);}
+    .why-inner{max-width:1300px;margin:0 auto;}
+    .why-header{text-align:center;margin-bottom:4rem;}
+    .why-header .section-eyebrow{justify-content:center;}
+    .why-header h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;color:var(--dark);
+    }
+    .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .why-card{
+      padding:2.4rem 1.8rem;background:var(--bg);
+      border:1px solid var(--border2);border-radius:10px;
+      transition:all 0.3s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden;
+    }
+    .why-card::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(184,147,63,0.05) 0%,transparent 60%);
+      opacity:0;transition:opacity 0.3s;
+    }
+    .why-card:hover{border-color:rgba(184,147,63,0.3);transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+    .why-card:hover::after{opacity:1;}
+    .why-icon{
+      width:44px;height:44px;background:linear-gradient(135deg,var(--gold-pale),rgba(240,228,196,0.4));
+      border-radius:8px;display:flex;align-items:center;justify-content:center;
+      color:var(--gold);margin-bottom:1.5rem;
+    }
+    .why-icon svg{width:20px;height:20px;}
+    .why-num{
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.8rem;font-weight:200;
+      color:rgba(184,147,63,0.15);line-height:1;
+      margin-bottom:0.5rem;
+    }
+    .why-card h3{font-size:0.86rem;color:var(--dark);margin-bottom:0.7rem;font-weight:600;letter-spacing:0.02em;}
+    .why-card p{font-size:0.78rem;color:var(--text-muted);line-height:1.85;}
+
+    /* ─── POST / LOGIN SECTION ─── */
+    .post-section{padding:6rem 5vw;background:var(--bg);}
+    .post-inner{
+      max-width:1300px;margin:0 auto;
+      display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+    }
+    .post-left h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;color:var(--dark);line-height:1.15;
+    }
+    .post-left h2 em{font-style:italic;color:var(--gold);}
+    .post-left p{margin-top:1.2rem;font-size:0.9rem;color:var(--text-muted);line-height:1.8;}
+    .post-steps{margin-top:2.2rem;display:flex;flex-direction:column;gap:1rem;}
+    .post-step{display:flex;align-items:center;gap:1.1rem;}
+    .post-step-num{
+      width:30px;height:30px;border-radius:50%;
+      background:var(--gold-pale);border:1px solid rgba(184,147,63,0.4);
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.7rem;color:var(--gold);font-weight:700;flex-shrink:0;
+    }
+    .post-step-txt{font-size:0.85rem;color:var(--text-muted);}
+
+    /* Form card */
+    .post-form-card{
+      background:#fff;border-radius:14px;padding:2.8rem;
+      box-shadow:var(--shadow-xl);border:1px solid var(--border2);
+    }
+    .form-tabs{display:flex;border-bottom:1px solid var(--border2);margin-bottom:2rem;gap:0;}
+    .form-tab{
+      flex:1;text-align:center;padding:0.8rem;
+      font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
+      cursor:pointer;color:var(--text-muted);font-weight:500;
+      border-bottom:2px solid transparent;transition:all 0.2s;
+      background:none;border-left:none;border-right:none;border-top:none;
+      font-family:'DM Sans',sans-serif;
+    }
+    .form-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+    .form-panel{display:none;}
+    .form-panel.active{display:block;}
+    .form-group{margin-bottom:1.1rem;}
+    .form-group label{
+      display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;
+      color:var(--text-muted);margin-bottom:0.4rem;font-weight:600;
+    }
+    .form-group input,.form-group select,.form-group textarea{
+      width:100%;padding:0.72rem 1rem;border:1px solid var(--border);border-radius:5px;
+      font-family:'DM Sans',sans-serif;font-size:0.87rem;color:var(--text);
+      background:var(--bg);outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+      border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,147,63,0.12);
+    }
+    .form-group textarea{resize:vertical;min-height:80px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+    .form-submit{
+      width:100%;padding:0.95rem;background:var(--gold);color:#fff;border:none;border-radius:5px;
+      font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;
+      font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;
+      transition:all 0.22s;
+    }
+    .form-submit:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px var(--gold-glow);}
+    .form-note{text-align:center;font-size:0.72rem;color:var(--text-light);margin-top:1rem;}
+    .form-note a{color:var(--gold);text-decoration:none;}
+
+    /* ─── CONTACT ─── */
+    .contact-section{padding:7rem 5vw;background:var(--dark);text-align:center;position:relative;overflow:hidden;}
+    .contact-bg{
+      position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(184,147,63,0.08) 0%,transparent 70%);
+    }
+    .contact-inner{max-width:740px;margin:0 auto;position:relative;z-index:1;}
+    .contact-inner .section-eyebrow{justify-content:center;}
+    .contact-inner .section-eyebrow::before{background:var(--gold);}
+    .contact-inner h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.6rem,5vw,4.5rem);font-weight:200;color:#fff;line-height:1.05;margin-bottom:1.2rem;
+    }
+    .contact-inner h2 em{font-style:italic;color:var(--gold-light);}
+    .contact-inner p{font-size:0.92rem;color:rgba(255,255,255,0.5);line-height:1.85;margin-bottom:2.8rem;}
+    .contact-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .btn-gold{
+      background:var(--gold);color:#fff;padding:0.9rem 2.4rem;font-size:0.8rem;
+      letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;font-weight:500;
+      border:none;cursor:pointer;text-decoration:none;border-radius:3px;
+      transition:all 0.22s;display:inline-block;
+    }
+    .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px var(--gold-glow);}
+
+    .contact-cards{
+      display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-top:3.5rem;
+      padding-top:3rem;border-top:1px solid rgba(255,255,255,0.06);
+    }
+    .contact-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(184,147,63,0.15);
+      border-radius:10px;padding:1.8rem 2rem;text-align:center;min-width:155px;
+      transition:all 0.3s;
+    }
+    .contact-card:hover{background:rgba(184,147,63,0.08);border-color:rgba(184,147,63,0.3);transform:translateY(-3px);}
+    .contact-card-icon{
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:0.9rem;color:var(--gold-light);
+    }
+    .contact-card-icon svg{width:26px;height:26px;}
+    .contact-card-label{
+      font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;
+      color:var(--gold);display:block;margin-bottom:0.4rem;
+    }
+    .contact-card-value{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(255,255,255,0.8);}
+    .contact-card-value a{color:inherit;text-decoration:none;}
+    .contact-card-value a:hover{color:var(--gold-light);}
+
+    /* ─── FOOTER ─── */
+    footer{
+      background:rgba(0,0,0,0.4);backdrop-filter:blur(2px);
+      padding:2rem 5vw;border-top:1px solid rgba(184,147,63,0.08);
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+    }
+    .footer-logo{
+      font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:rgba(255,255,255,0.7);
+      display:flex;align-items:center;gap:0.4rem;
+    }
+    .footer-logo span{color:var(--gold);}
+    footer p{font-size:0.72rem;color:rgba(255,255,255,0.25);letter-spacing:0.04em;}
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu{
+      display:none;position:fixed;inset:0;z-index:299;
+      background:rgba(245,242,235,0.98);backdrop-filter:blur(16px);
+      flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;
+    }
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{
+      font-size:1.5rem;color:var(--dark);text-decoration:none;
+      font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:0.02em;
+      transition:color 0.2s;
+    }
+    .mobile-menu a:hover{color:var(--gold);}
+    .mobile-close{
+      position:absolute;top:1.5rem;right:2rem;font-size:1.5rem;cursor:pointer;
+      color:var(--text-muted);background:none;border:none;font-family:inherit;
+    }
+
+    /* ─── TOAST ─── */
+    .toast{
+      position:fixed;bottom:2rem;right:2rem;z-index:999;
+      background:var(--dark2);color:#fff;
+      padding:1rem 1.5rem;border-radius:8px;
+      font-size:0.82rem;border-left:3px solid var(--gold);
+      transform:translateY(20px);opacity:0;
+      transition:all 0.35s cubic-bezier(0.22,1,0.36,1);pointer-events:none;
+      max-width:300px;box-shadow:var(--shadow-xl);
+    }
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1024px){
+      .why-grid{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:900px){
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      .nav-btn-gold{display:none;}
+      .hero-inner{grid-template-columns:1fr;padding-top:100px;}
+      .hero-stats-stack{flex-direction:row;flex-wrap:wrap;transform:none!important;opacity:1!important;}
+      .hstat{flex:1;min-width:140px;}
+      .about-grid{grid-template-columns:1fr;gap:3rem;}
+      .listings-grid{grid-template-columns:1fr 1fr;}
+      .projects-grid{grid-template-columns:1fr 1fr;}
+      .post-inner{grid-template-columns:1fr;gap:3rem;}
+    }
+    @media(max-width:640px){
+      .listings-grid{grid-template-columns:1fr;}
+      .projects-grid{grid-template-columns:1fr;}
+      .why-grid{grid-template-columns:1fr;}
+      .listings-top{flex-direction:column;align-items:flex-start;}
+      .projects-header{flex-direction:column;}
+      .form-row{grid-template-columns:1fr;}
+      .hero-h1{font-size:clamp(2.8rem,10vw,4rem);}
+      .hstat{min-width:100%;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#listings" onclick="closeMobile()">Properties</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#why" onclick="closeMobile()">Why Us</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#post" class="btn-primary" onclick="closeMobile()" style="font-size:0.9rem;">Post Property</a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="logo">
+    <div class="logo-dot"></div>
+    Manish <span>Enterprises</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#listings">Properties</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#post" class="nav-btn">Login</a>
+    <a href="#post" class="nav-btn-gold">Post Property</a>
+    <div class="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <canvas id="heroCanvas"></canvas>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <span>Bangalore &amp; Karnataka's Premier Developers</span>
+      </div>
+      <h1 class="hero-h1">
+        Turning<br>Realty <em>Dreams</em><br>into Reality
+      </h1>
+      <p class="hero-sub">
+        Two decades of crafting luxurious and affordable homes across Bangalore.
+        From residential apartments to commercial complexes — built with precision, delivered with pride.
+      </p>
+      <div class="hero-search-wrap">
+        <div class="hero-search">
+          <input type="text" placeholder="Search by location, property type…"/>
+          <button>
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#listings" class="btn-primary">
+          Browse Properties
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="tel:+919845123456" class="btn-ghost">+91 98451 23456</a>
+      </div>
+    </div>
+
+    <div class="hero-stats-stack">
+      <div class="hstat">
+        <div class="hstat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20V10l8-6 8 6v10"/><path d="M9 20v-5h6v5"/></svg>
+        </div>
+        <div><div class="hstat-num">20+</div><div class="hstat-label">Years of Excellence</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div><div class="hstat-num">13+</div><div class="hstat-label">Completed Projects</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div><div class="hstat-num">500+</div><div class="hstat-label">Happy Families</div></div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div><div class="hstat-num">8+</div><div class="hstat-label">Locations in Bangalore</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Residential Projects</span><span class="dot"> ◆ </span>
+    <span>Commercial Complexes</span><span class="dot"> ◆ </span>
+    <span>Luxury Apartments</span><span class="dot"> ◆ </span>
+    <span>Villa Plots</span><span class="dot"> ◆ </span>
+    <span>Uttarahalli</span><span class="dot"> ◆ </span>
+    <span>Padmanabha Nagar</span><span class="dot"> ◆ </span>
+    <span>Kanakpura Road</span><span class="dot"> ◆ </span>
+    <span>RR Nagar</span><span class="dot"> ◆ </span>
+    <span>Chennasandra</span><span class="dot"> ◆ </span>
+    <span>Jayanagar</span><span class="dot"> ◆ </span>
+    <span>Residential Projects</span><span class="dot"> ◆ </span>
+    <span>Commercial Complexes</span><span class="dot"> ◆ </span>
+    <span>Luxury Apartments</span><span class="dot"> ◆ </span>
+    <span>Villa Plots</span><span class="dot"> ◆ </span>
+    <span>Uttarahalli</span><span class="dot"> ◆ </span>
+    <span>Padmanabha Nagar</span><span class="dot"> ◆ </span>
+    <span>Kanakpura Road</span><span class="dot"> ◆ </span>
+    <span>RR Nagar</span><span class="dot"> ◆ </span>
+    <span>Chennasandra</span><span class="dot"> ◆ </span>
+    <span>Jayanagar</span><span class="dot"> ◆ </span>
+  </div>
+</div>
+
+<!-- LISTINGS -->
+<section class="listings-section" id="listings">
+  <div class="listings-top reveal">
+    <div>
+      <div class="section-eyebrow"><span>Properties</span></div>
+      <h2>Featured Listings</h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterCards(this,'all')">All</button>
+      <button class="filter-tab" onclick="filterCards(this,'buy')">Buy</button>
+      <button class="filter-tab" onclick="filterCards(this,'rent')">Rent</button>
+      <button class="filter-tab" onclick="filterCards(this,'commercial')">Commercial</button>
+    </div>
+  </div>
+
+  <div class="listings-grid" id="listingsGrid">
+
+    <div class="property-card reveal" data-type="buy">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#e8dcc8 0%,#d4c4a0 100%);"></div>
+        <div class="card-img-icon" style="color:#a08040;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="M9 21V9h6v12"/><path d="M2 9h20"/><path d="M6 6h.01"/><path d="M10 6h.01"/><path d="M14 6h.01"/><path d="M18 6h.01"/><path d="M6 13h.01"/><path d="M18 13h.01"/><path d="M6 17h.01"/><path d="M18 17h.01"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(184,147,63,0.9);backdrop-filter:blur(6px);">For Sale</div>
+        <div class="card-badge-new" style="background:rgba(45,155,79,0.9);backdrop-filter:blur(6px);">New</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹85 <sub>Lakhs</sub></div>
+        <div class="card-title">EJ Residency – 3 BHK Apartment</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Uttarahalli, South Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            <div class="card-spec-val">3 BHK</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">1,450 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17H5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2Z"/><path d="M3 10 5.5 4h13L21 10"/><path d="M3 10h18v7H3z"/></svg>
+            <div class="card-spec-val">1 Parking</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">MK</div><div class="card-owner-name">Mohan Kumar</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+    <div class="property-card reveal" data-type="rent">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#d4dce8 0%,#b4c4d8 100%);"></div>
+        <div class="card-img-icon" style="color:#4060a0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(61,122,184,0.88);backdrop-filter:blur(6px);">For Rent</div>
+        <div class="card-posted">3 days ago</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹22,000 <sub>/month</sub></div>
+        <div class="card-title">EJ Brundavan – 2 BHK Semi-Furnished</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Padmanabha Nagar, Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            <div class="card-spec-val">2 BHK</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">1,100 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            <div class="card-spec-val">Club</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">SR</div><div class="card-owner-name">Suma Rao</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+    <div class="property-card reveal" data-type="commercial">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#d8e8d4 0%,#b4d4b0 100%);"></div>
+        <div class="card-img-icon" style="color:#408040;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"/><path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9"/><path d="M12 3v6"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(74,138,66,0.9);backdrop-filter:blur(6px);">Commercial</div>
+        <div class="card-posted">1 week ago</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹1.8 <sub>Crores</sub></div>
+        <div class="card-title">EJ Lucky Towers – Office Space</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          RR Nagar, West Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="M9 21V9h6v12"/><path d="M2 9h20"/></svg>
+            <div class="card-spec-val">Office</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">2,400 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17H5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2Z"/><path d="M3 10 5.5 4h13L21 10"/><path d="M3 10h18v7H3z"/></svg>
+            <div class="card-spec-val">2 Parking</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">ME</div><div class="card-owner-name">Manish Enterprises</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+    <div class="property-card reveal" data-type="buy">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#e8dcd4 0%,#d4c4b4 100%);"></div>
+        <div class="card-img-icon" style="color:#906040;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M9 21V12h6v9"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(184,147,63,0.9);backdrop-filter:blur(6px);">For Sale</div>
+        <div class="card-posted">2 days ago</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹1.2 <sub>Crores</sub></div>
+        <div class="card-title">Maharaja – Luxury 3 BHK Flat</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          RR Nagar, Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            <div class="card-spec-val">3 BHK</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">1,850 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            <div class="card-spec-val">Garden</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">AJ</div><div class="card-owner-name">Arun Joshi</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+    <div class="property-card reveal" data-type="rent">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#e4d8ec 0%,#c8b8dc 100%);"></div>
+        <div class="card-img-icon" style="color:#804090;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="2" y="7" width="9" height="14" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/><path d="M6 7V5"/><path d="M17 3V1"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(123,79,172,0.9);backdrop-filter:blur(6px);">For Rent</div>
+        <div class="card-posted">5 days ago</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹18,500 <sub>/month</sub></div>
+        <div class="card-title">EJ Sai Chandana – 2 BHK Apartment</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Kanakpura Road, Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            <div class="card-spec-val">2 BHK</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">1,050 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 7.757a6 6 0 1 0-8.485 8.486 6 6 0 0 0 8.485-8.486Z"/></svg>
+            <div class="card-spec-val">Gym</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">PV</div><div class="card-owner-name">Priya Venkat</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+    <div class="property-card reveal" data-type="buy">
+      <div class="card-img">
+        <div class="card-img-bg" style="background:linear-gradient(135deg,#ece4d4 0%,#dcd0b8 100%);"></div>
+        <div class="card-img-icon" style="color:#806030;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M12 2v4"/><path d="M5 19.5C5.5 18 6 15 12 15c6 0 6.5 3 7 4.5"/><path d="M3 7c2-2 4-3 9-3s7 1 9 3"/></svg>
+        </div>
+        <div class="card-badge" style="background:rgba(184,147,63,0.9);backdrop-filter:blur(6px);">For Sale</div>
+        <div class="card-badge-new" style="background:rgba(200,80,40,0.9);backdrop-filter:blur(6px);">Hot Deal</div>
+      </div>
+      <div class="card-body">
+        <div class="card-price">₹62 <sub>Lakhs</sub></div>
+        <div class="card-title">EJ Sarovara – 2 BHK Apartment</div>
+        <div class="card-loc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Chennasandra, Bangalore
+        </div>
+        <div class="card-specs">
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            <div class="card-spec-val">2 BHK</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.3 8.7 8.7 21.3c-1 1-2.5 1-3.4 0l-2.6-2.6c-1-1-1-2.5 0-3.4L15.3 2.7c1-1 2.5-1 3.4 0l2.6 2.6c1 1 1 2.5 0 3.4Z"/><path d="m7.5 10.5 2 2"/><path d="m10.5 7.5 2 2"/></svg>
+            <div class="card-spec-val">1,020 sqft</div>
+          </div>
+          <div class="card-spec">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+            <div class="card-spec-val">Pool</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-owner"><div class="card-avatar">RN</div><div class="card-owner-name">Ravi Nair</div></div>
+        <button class="card-contact-btn" onclick="showToast('Contact request sent!')">Contact</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-bg-pattern"></div>
+  <div class="about-grid">
+    <div class="about-left reveal-left">
+      <div class="section-eyebrow"><span>Who We Are</span></div>
+      <h2>Bangalore's Most <em>Trusted</em><br>Real Estate Name</h2>
+      <p>Manish Enterprises is a name that resonates among the prominent residential and commercial developers in Bangalore and across Karnataka. Our ability to deliver on-time, luxurious and affordable housing projects has ensured continuous trust from our customers.</p>
+      <p>From land acquisition and architectural design to construction, sales, and after-sales service — we manage every step with expertise, transparency, and an unwavering commitment to quality.</p>
+      <a href="#contact" class="btn-ghost-light">Talk to Our Team</a>
+    </div>
+    <div class="value-cards reveal-right">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <h4>On-Time Delivery</h4>
+          <p>Timely delivery without compromising quality is our strongest commitment to every customer.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <h4>Quality Construction</h4>
+          <p>Director involvement from start to finish ensures strong quality control on every project.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h4>Customer First</h4>
+          <p>Our unique customer-centric model has a proven track record of innovation and satisfaction.</p>
+        </div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h4>Full Transparency</h4>
+          <p>Transparency in operations is our most effective strategy for achieving highest satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="projects-header reveal">
+    <div>
+      <div class="section-eyebrow"><span>Our Portfolio</span></div>
+      <h2>Landmark Projects<br>Across Bangalore</h2>
+    </div>
+    <p>From affordable 2 BHK homes to luxury complexes — every project a testament to our craftsmanship.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal"><span class="project-tag">Residential · 2 &amp; 3 BHK</span><div class="project-name">EJ Residency</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Uttarahalli, Bangalore</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · 2 &amp; 3 BHK</span><div class="project-name">EJ Sureka</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Uttarahalli, Bangalore</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Apartments</span><div class="project-name">EJ Brundavan</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Padmanabha Nagar</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Apartments</span><div class="project-name">EJ Sai Chandana</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Kanakpura Road</div></div>
+    <div class="project-card reveal"><span class="project-tag">Commercial · Complex</span><div class="project-name">EJ Lucky Towers</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>RR Nagar, Bangalore</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Luxury</span><div class="project-name">Maharaja</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>RR Nagar · 30 Flats</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Apartments</span><div class="project-name">EJ Sarovara</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Chennasandra, Bangalore</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Layout</span><div class="project-name">3.25-Acre Green City</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Architectural Landscape</div></div>
+    <div class="project-card reveal"><span class="project-tag">Residential · Classic</span><div class="project-name">Sri Kamalaksha</div><div class="project-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Jayanagar, Bangalore</div></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why">
+  <div class="why-inner">
+    <div class="why-header reveal">
+      <div class="section-eyebrow"><span>Why Choose Us</span></div>
+      <h2>The Manish Enterprises Difference</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <div class="why-num">01</div>
+        <h3>Two Decades of Experience</h3>
+        <p>Over 20 years in Bangalore's real estate market, delivering projects that stand the test of time.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22V2"/><path d="m17 7-5-5-5 5"/><path d="M2 17h20"/><path d="M6 21h12"/></svg></div>
+        <div class="why-num">02</div>
+        <h3>End-to-End Service</h3>
+        <p>From land acquisition and design to construction and after-sales — we handle every step.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2Z"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="why-num">03</div>
+        <h3>Best Price. Best Location.</h3>
+        <p>Strategic locations across Bangalore at competitive pricing, ensuring the best value.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a3 3 0 0 0-6 0v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg></div>
+        <div class="why-num">04</div>
+        <h3>Continual Improvement</h3>
+        <p>A culture of continuous improvement, driven by professionals fully accountable for results.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POST PROPERTY -->
+<section class="post-section" id="post">
+  <div class="post-inner">
+    <div class="post-left reveal-left">
+      <div class="section-eyebrow"><span>Post Property</span></div>
+      <h2>List Your Property.<br><em>Reach Thousands</em><br>of Buyers.</h2>
+      <p>Join hundreds of property owners and agents who trust Manish Enterprises to connect them with genuine buyers and renters across Bangalore.</p>
+      <div class="post-steps">
+        <div class="post-step"><div class="post-step-num">1</div><div class="post-step-txt">Create your free account</div></div>
+        <div class="post-step"><div class="post-step-num">2</div><div class="post-step-txt">Fill in your property details</div></div>
+        <div class="post-step"><div class="post-step-num">3</div><div class="post-step-txt">Your listing goes live instantly</div></div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="post-form-card">
+        <div class="form-tabs">
+          <button class="form-tab active" onclick="switchTab(this,'login')">Login</button>
+          <button class="form-tab" onclick="switchTab(this,'register')">Register</button>
+          <button class="form-tab" onclick="switchTab(this,'postprop')">Post Property</button>
+        </div>
+        <div class="form-panel active" id="tab-login">
+          <div class="form-group"><label>Mobile Number / Email</label><input type="text" placeholder="+91 98451 23456"/></div>
+          <div class="form-group"><label>Password</label><input type="password" placeholder="Enter your password"/></div>
+          <button class="form-submit" onclick="showToast('Login successful! Welcome back.')">Login to Account</button>
+          <p class="form-note">New here? <a href="#" onclick="switchTabById('register')">Create a free account</a></p>
+        </div>
+        <div class="form-panel" id="tab-register">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Raj"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kumar"/></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="raj@example.com"/></div>
+          <div class="form-group"><label>Mobile Number</label><input type="tel" placeholder="+91 98765 43210"/></div>
+          <div class="form-group"><label>Password</label><input type="password" placeholder="Create a strong password"/></div>
+          <button class="form-submit" onclick="showToast('Account created! You can now post properties.')">Create Account</button>
+        </div>
+        <div class="form-panel" id="tab-postprop">
+          <div class="form-row">
+            <div class="form-group"><label>Property Type</label><select><option>Apartment</option><option>Villa</option><option>Plot</option><option>Commercial</option></select></div>
+            <div class="form-group"><label>Listing Type</label><select><option>For Sale</option><option>For Rent</option></select></div>
+          </div>
+          <div class="form-group"><label>Property Title</label><input type="text" placeholder="e.g. 3 BHK Apartment in Uttarahalli"/></div>
+          <div class="form-row">
+            <div class="form-group"><label>Location</label><input type="text" placeholder="Area, Bangalore"/></div>
+            <div class="form-group"><label>Price</label><input type="text" placeholder="e.g. ₹85 Lakhs"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Area (sqft)</label><input type="text" placeholder="1200"/></div>
+            <div class="form-group"><label>BHK / Rooms</label><select><option>1 BHK</option><option>2 BHK</option><option>3 BHK</option><option>4+ BHK</option></select></div>
+          </div>
+          <div class="form-group"><label>Description</label><textarea placeholder="Describe your property — amenities, condition, nearby places…"></textarea></div>
+          <div class="form-group"><label>Contact Number</label><input type="tel" placeholder="+91 98451 23456"/></div>
+          <button class="form-submit" onclick="showToast('Property listed! Our team will review and publish shortly.')">Post Property Free</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-inner">
+    <div class="section-eyebrow reveal"><span>Get In Touch</span></div>
+    <h2 class="reveal">Ready to Find<br>Your <em>Dream Home?</em></h2>
+    <p class="reveal">Our team is ready to guide you through every step of the property journey. Reach out today and we'll get back to you within 24 hours.</p>
+    <div class="contact-btns reveal">
+      <a href="mailto:info@manishenterprises.in" class="btn-gold">Email Us</a>
+      <a href="tel:+919845123456" class="btn-ghost-light">+91 98451 23456</a>
+    </div>
+    <div class="contact-cards reveal">
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <span class="contact-card-label">Location</span>
+        <div class="contact-card-value">Bangalore, Karnataka</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.9 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.09-1.09a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <span class="contact-card-label">Phone</span>
+        <div class="contact-card-value"><a href="tel:+919845123456">+91 98451 23456</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+        <span class="contact-card-label">Email</span>
+        <div class="contact-card-value"><a href="mailto:info@manishenterprises.in">info@manishenterprises.in</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <span class="contact-card-label">Hours</span>
+        <div class="contact-card-value">Mon–Sat, 9 AM–6 PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>Manish</span> Enterprises</div>
+  <p>© 2025 Manish Enterprises. Bangalore, Karnataka. All rights reserved.</p>
+  <p style="font-size:0.68rem;color:rgba(255,255,255,0.15);">Turning Realty Dreams into Reality</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── PARTICLE CANVAS ─── */
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const N = 55;
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function rand(a,b){return a+Math.random()*(b-a);}
+
+  class Particle{
+    constructor(){this.reset(true);}
+    reset(init){
+      this.x = rand(0, W);
+      this.y = init ? rand(0, H) : H + 10;
+      this.r = rand(1, 2.8);
+      this.speed = rand(0.18, 0.55);
+      this.angle = rand(-0.3, 0.3);
+      this.alpha = rand(0.15, 0.55);
+      this.alphaDir = Math.random() > 0.5 ? 1 : -1;
+      this.pulse = rand(0.002, 0.006);
+    }
+    update(){
+      this.y -= this.speed;
+      this.x += Math.sin(this.angle + this.y * 0.01) * 0.3;
+      this.alpha += this.pulse * this.alphaDir;
+      if(this.alpha > 0.6 || this.alpha < 0.08) this.alphaDir *= -1;
+      if(this.y < -10) this.reset(false);
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(184,147,63,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for(let i=0;i<N;i++) particles.push(new Particle());
+
+  // Connection lines
+  function drawConnections(){
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          const alpha=(1-dist/120)*0.08;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(184,147,63,${alpha})`;
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    drawConnections();
+    particles.forEach(p=>{p.update();p.draw();});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ─── HERO ENTRANCE ANIMATION ─── */
+gsap.timeline({delay:0.1})
+  .to('.hero-eyebrow', {opacity:1, y:0, duration:0.8, ease:'power3.out'})
+  .to('.hero-h1', {opacity:1, y:0, duration:1, ease:'power3.out'}, '-=0.5')
+  .to('.hero-sub', {opacity:1, y:0, duration:0.8, ease:'power3.out'}, '-=0.6')
+  .to('.hero-search-wrap', {opacity:1, y:0, duration:0.7, ease:'power3.out'}, '-=0.5')
+  .to('.hero-actions', {opacity:1, y:0, duration:0.7, ease:'power3.out'}, '-=0.5')
+  .to('.hero-stats-stack', {opacity:1, x:0, duration:0.9, ease:'power3.out'}, '-=0.8');
+
+/* ─── SCROLL ANIMATIONS ─── */
+gsap.utils.toArray('.reveal').forEach((el, i) => {
+  gsap.fromTo(el,
+    {opacity:0, y:36},
+    {opacity:1, y:0, duration:0.75, ease:'power2.out',
+     scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'},
+     delay:(i%3)*0.07}
+  );
+});
+
+gsap.utils.toArray('.reveal-left').forEach(el => {
+  gsap.fromTo(el,
+    {opacity:0, x:-40},
+    {opacity:1, x:0, duration:0.9, ease:'power2.out',
+     scrollTrigger:{trigger:el, start:'top 82%', toggleActions:'play none none none'}}
+  );
+});
+
+gsap.utils.toArray('.reveal-right').forEach(el => {
+  gsap.fromTo(el,
+    {opacity:0, x:40},
+    {opacity:1, x:0, duration:0.9, ease:'power2.out',
+     scrollTrigger:{trigger:el, start:'top 82%', toggleActions:'play none none none'}}
+  );
+});
+
+/* ─── NAV ─── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+/* ─── MOBILE MENU ─── */
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');}
+
+/* ─── FILTER ─── */
+function filterCards(btn, type){
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.property-card').forEach(card=>{
+    const match = type==='all' || card.dataset.type===type;
+    gsap.to(card, {opacity: match?1:0.25, scale: match?1:0.97, duration:0.3, ease:'power2.out'});
+    card.style.pointerEvents = match ? '' : 'none';
+  });
+}
+
+/* ─── FORM TABS ─── */
+function switchTab(btn, id){
+  document.querySelectorAll('.form-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+function switchTabById(id){
+  const btn=Array.from(document.querySelectorAll('.form-tab')).find(t=>t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+id+"'"));
+  if(btn) switchTab(btn,id);
+}
+
+/* ─── TOAST ─── */
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ─── CARD TILT MICRO-INTERACTION ─── */
+document.querySelectorAll('.property-card').forEach(card=>{
+  card.addEventListener('mousemove', e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    gsap.to(card,{rotateY:x*6, rotateX:-y*4, duration:0.4, ease:'power2.out', transformPerspective:800});
+  });
+  card.addEventListener('mouseleave', ()=>{
+    gsap.to(card,{rotateY:0, rotateX:0, duration:0.5, ease:'power2.out'});
+  });
+});
+</script>
+</body>
+</html>
